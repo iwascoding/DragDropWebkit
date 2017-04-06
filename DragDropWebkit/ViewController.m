@@ -8,16 +8,33 @@
 
 #import "ViewController.h"
 
+#import <WebKit/WebKit.h>
+
+
+@interface ViewController () <WebUIDelegate>
+
+@property (weak) IBOutlet WebView *webview;
+@property (weak) IBOutlet NSTextView *textView;
+
+@end
+
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-
-    // Do any additional setup after loading the view.
+    
+    NSString    *path = [[NSBundle mainBundle] pathForResource:@"webview" ofType:@"html"];
+    NSData      *data = [NSData dataWithContentsOfFile:path];
+    
+    [[self.webview mainFrame] loadData:data
+                              MIMEType:@"text/html"
+                      textEncodingName:@"UTF-8"
+                               baseURL:[NSURL fileURLWithPath:[path stringByDeletingLastPathComponent]]];
 }
 
-
-- (void)setRepresentedObject:(id)representedObject {
+- (void)setRepresentedObject:(id)representedObject
+{
     [super setRepresentedObject:representedObject];
 
     // Update the view, if already loaded.

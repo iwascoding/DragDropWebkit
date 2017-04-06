@@ -11,7 +11,9 @@
 		DAE11D6F1E9673E50001D0A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE11D6E1E9673E50001D0A2 /* main.m */; };
 		DAE11D721E9673E50001D0A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE11D711E9673E50001D0A2 /* ViewController.m */; };
 		DAE11D741E9673E50001D0A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAE11D731E9673E50001D0A2 /* Assets.xcassets */; };
-		DAE11D771E9673E50001D0A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAE11D751E9673E50001D0A2 /* Main.storyboard */; };
+		DAE11D821E9674840001D0A2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAE11D811E9674840001D0A2 /* MainMenu.xib */; };
+		DAE11D851E9676540001D0A2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE11D841E9676540001D0A2 /* WebKit.framework */; };
+		DAE11D871E9676DA0001D0A2 /* webview.html in Resources */ = {isa = PBXBuildFile; fileRef = DAE11D861E9676DA0001D0A2 /* webview.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,8 +24,10 @@
 		DAE11D701E9673E50001D0A2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		DAE11D711E9673E50001D0A2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DAE11D731E9673E50001D0A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DAE11D761E9673E50001D0A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAE11D781E9673E60001D0A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAE11D811E9674840001D0A2 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		DAE11D841E9676540001D0A2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		DAE11D861E9676DA0001D0A2 /* webview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = webview.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE11D851E9676540001D0A2 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,7 @@
 			children = (
 				DAE11D691E9673E50001D0A2 /* DragDropWebkit */,
 				DAE11D681E9673E50001D0A2 /* Products */,
+				DAE11D831E9676540001D0A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,8 +67,9 @@
 				DAE11D701E9673E50001D0A2 /* ViewController.h */,
 				DAE11D711E9673E50001D0A2 /* ViewController.m */,
 				DAE11D731E9673E50001D0A2 /* Assets.xcassets */,
-				DAE11D751E9673E50001D0A2 /* Main.storyboard */,
+				DAE11D811E9674840001D0A2 /* MainMenu.xib */,
 				DAE11D781E9673E60001D0A2 /* Info.plist */,
+				DAE11D861E9676DA0001D0A2 /* webview.html */,
 				DAE11D6D1E9673E50001D0A2 /* Supporting Files */,
 			);
 			path = DragDropWebkit;
@@ -74,6 +81,14 @@
 				DAE11D6E1E9673E50001D0A2 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DAE11D831E9676540001D0A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DAE11D841E9676540001D0A2 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +150,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE11D871E9676DA0001D0A2 /* webview.html in Resources */,
 				DAE11D741E9673E50001D0A2 /* Assets.xcassets in Resources */,
-				DAE11D771E9673E50001D0A2 /* Main.storyboard in Resources */,
+				DAE11D821E9674840001D0A2 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,17 +170,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DAE11D751E9673E50001D0A2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DAE11D761E9673E50001D0A2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DAE11D791E9673E60001D0A2 /* Debug */ = {
