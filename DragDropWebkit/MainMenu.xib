@@ -676,14 +676,18 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="415"/>
+            <rect key="contentRect" x="196" y="240" width="568" height="425"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="415"/>
+                <rect key="frame" x="0.0" y="0.0" width="568" height="425"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <webView translatesAutoresizingMaskIntoConstraints="NO" id="A4Z-o9-Hxs">
-                        <rect key="frame" x="0.0" y="128" width="480" height="287"/>
+                        <rect key="frame" x="0.0" y="128" width="380" height="264"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="9e9-ek-mEO"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="azk-HN-nAu"/>
+                        </constraints>
                         <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
                             <nil key="identifier"/>
                         </webPreferences>
@@ -692,17 +696,17 @@
                         </connections>
                     </webView>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XfT-eb-lSR">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="120"/>
                         <clipView key="contentView" id="fgy-wU-gPE">
-                            <rect key="frame" x="1" y="1" width="478" height="118"/>
+                            <rect key="frame" x="1" y="1" width="566" height="118"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="q8b-Mm-Tva">
-                                    <rect key="frame" x="0.0" y="0.0" width="478" height="118"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="566" height="118"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="478" height="118"/>
-                                    <size key="maxSize" width="479" height="10000000"/>
+                                    <size key="minSize" width="566" height="118"/>
+                                    <size key="maxSize" width="566" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
                             </subviews>
@@ -716,25 +720,55 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="KxE-tF-oOo">
-                            <rect key="frame" x="463" y="1" width="16" height="118"/>
+                            <rect key="frame" x="551" y="1" width="16" height="118"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1U-bn-Ndj">
+                        <rect key="frame" x="6" y="400" width="152" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Not Working (WebView):" id="iic-Lg-Aso">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsd-Xb-I5a">
+                        <rect key="frame" x="386" y="400" width="118" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Working (NSView):" id="wI8-ZO-4t5">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Axp-P1-Bm7" customClass="DropView">
+                        <rect key="frame" x="388" y="128" width="180" height="264"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="180" id="v4F-21-DZ0"/>
+                        </constraints>
+                    </customView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="gsd-Xb-I5a" firstAttribute="leading" secondItem="Axp-P1-Bm7" secondAttribute="leading" id="2Mu-fZ-hAj"/>
                     <constraint firstItem="XfT-eb-lSR" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="3ON-3T-UYM"/>
                     <constraint firstItem="A4Z-o9-Hxs" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="4c6-PN-h6R"/>
-                    <constraint firstAttribute="trailing" secondItem="A4Z-o9-Hxs" secondAttribute="trailing" id="BUf-0L-cko"/>
+                    <constraint firstItem="gsd-Xb-I5a" firstAttribute="baseline" secondItem="v1U-bn-Ndj" secondAttribute="baseline" id="BBB-Rz-b0h"/>
+                    <constraint firstItem="v1U-bn-Ndj" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="FZk-c3-Xlb"/>
                     <constraint firstAttribute="trailing" secondItem="XfT-eb-lSR" secondAttribute="trailing" id="GIm-sm-yVu"/>
                     <constraint firstItem="XfT-eb-lSR" firstAttribute="top" secondItem="A4Z-o9-Hxs" secondAttribute="bottom" constant="8" id="H3L-Pl-RAc"/>
+                    <constraint firstItem="v1U-bn-Ndj" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="8" id="S9W-in-P9p"/>
                     <constraint firstAttribute="bottom" secondItem="XfT-eb-lSR" secondAttribute="bottom" id="SKU-FK-MbE"/>
-                    <constraint firstItem="A4Z-o9-Hxs" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="VGl-5G-xOI"/>
+                    <constraint firstAttribute="trailing" secondItem="Axp-P1-Bm7" secondAttribute="trailing" id="Sja-as-jqI"/>
+                    <constraint firstItem="A4Z-o9-Hxs" firstAttribute="top" secondItem="v1U-bn-Ndj" secondAttribute="bottom" constant="8" id="Sje-Ik-nJt"/>
+                    <constraint firstItem="Axp-P1-Bm7" firstAttribute="leading" secondItem="A4Z-o9-Hxs" secondAttribute="trailing" constant="8" id="Vbj-ew-CmR"/>
+                    <constraint firstItem="Axp-P1-Bm7" firstAttribute="top" secondItem="A4Z-o9-Hxs" secondAttribute="top" id="dvU-2I-kRt"/>
+                    <constraint firstItem="Axp-P1-Bm7" firstAttribute="bottom" secondItem="A4Z-o9-Hxs" secondAttribute="bottom" id="l66-lf-3pE"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="140" y="1.5"/>
+            <point key="canvasLocation" x="230" y="6.5"/>
         </window>
         <customObject id="R2R-aG-9nM" customClass="ViewController">
             <connections>
+                <outlet property="dropView" destination="Axp-P1-Bm7" id="Jb2-hI-FBZ"/>
                 <outlet property="textView" destination="q8b-Mm-Tva" id="qhw-Hr-UIS"/>
                 <outlet property="view" destination="A4Z-o9-Hxs" id="Gau-2F-HQA"/>
                 <outlet property="webview" destination="A4Z-o9-Hxs" id="xQN-rg-JLv"/>

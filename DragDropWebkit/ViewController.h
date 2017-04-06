@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString *const kUpdateLogViewNotification;
+
 @interface ViewController : NSViewController
 
++ (void) postUpdateLogViewNotificationWithText:(NSString*)inText;
 
 @end
 

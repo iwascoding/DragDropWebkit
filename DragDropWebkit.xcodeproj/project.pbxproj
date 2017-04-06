@@ -17,6 +17,8 @@
 		DAE11D891E967A2A0001D0A2 /* image_dropzone_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = DAE11D881E967A2A0001D0A2 /* image_dropzone_marker.png */; };
 		DAE11D921E967C9F0001D0A2 /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE11D8E1E967C9F0001D0A2 /* CDEvent.m */; };
 		DAE11D931E967C9F0001D0A2 /* CDEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE11D901E967C9F0001D0A2 /* CDEvents.m */; };
+		DAE11D961E968B540001D0A2 /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE11D951E968B540001D0A2 /* DropView.m */; };
+		DAE11D991E968D860001D0A2 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE11D981E968D860001D0A2 /* Utilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,10 @@
 		DAE11D8F1E967C9F0001D0A2 /* CDEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvents.h; sourceTree = "<group>"; };
 		DAE11D901E967C9F0001D0A2 /* CDEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvents.m; sourceTree = "<group>"; };
 		DAE11D911E967C9F0001D0A2 /* CDEventsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEventsDelegate.h; sourceTree = "<group>"; };
+		DAE11D941E968B540001D0A2 /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
+		DAE11D951E968B540001D0A2 /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
+		DAE11D971E968D860001D0A2 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		DAE11D981E968D860001D0A2 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,10 @@
 				DAE11D6B1E9673E50001D0A2 /* AppDelegate.m */,
 				DAE11D701E9673E50001D0A2 /* ViewController.h */,
 				DAE11D711E9673E50001D0A2 /* ViewController.m */,
+				DAE11D941E968B540001D0A2 /* DropView.h */,
+				DAE11D951E968B540001D0A2 /* DropView.m */,
+				DAE11D971E968D860001D0A2 /* Utilities.h */,
+				DAE11D981E968D860001D0A2 /* Utilities.m */,
 				DAE11D731E9673E50001D0A2 /* Assets.xcassets */,
 				DAE11D811E9674840001D0A2 /* MainMenu.xib */,
 				DAE11D781E9673E60001D0A2 /* Info.plist */,
@@ -188,9 +198,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAE11D721E9673E50001D0A2 /* ViewController.m in Sources */,
+				DAE11D961E968B540001D0A2 /* DropView.m in Sources */,
 				DAE11D921E967C9F0001D0A2 /* CDEvent.m in Sources */,
 				DAE11D6F1E9673E50001D0A2 /* main.m in Sources */,
 				DAE11D6C1E9673E50001D0A2 /* AppDelegate.m in Sources */,
+				DAE11D991E968D860001D0A2 /* Utilities.m in Sources */,
 				DAE11D931E967C9F0001D0A2 /* CDEvents.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,14 +7,19 @@
 //
 
 #import "ViewController.h"
-#import "CDEvents.h"
+#import "Utilities.h"
+#import "DropView.h"
 
 #import <WebKit/WebKit.h>
+
+NSString *const kUpdateLogViewNotification = @"UpdateLogView";
+NSString *const kUpdateLogViewNotification_text = @"text";
 
 @interface ViewController () <WebUIDelegate>
 
 @property (weak) IBOutlet WebView *webview;
 @property (weak) IBOutlet NSTextView *textView;
+@property (weak) IBOutlet DropView *dropView;
 
 @property CDEvents *webviewFileDragEvents;
 
@@ -33,6 +38,20 @@
                               MIMEType:@"text/html"
                       textEncodingName:@"UTF-8"
                                baseURL:[NSURL fileURLWithPath:[path stringByDeletingLastPathComponent]]];
+    
+    [self.dropView registerForDraggedTypes:@[NSTIFFPboardType, NSFilenamesPboardType, NSFilesPromisePboardType]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateLogViewNotification:)
+                                                 name:kUpdateLogViewNotification
+                                               object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:kUpdateLogViewNotification
+                                               object:nil];
 }
 
 - (void)setRepresentedObject:(id)representedObject
@@ -61,10 +80,16 @@
     return nil;
 }
 
++ (void) postUpdateLogViewNotificationWithText:(NSString*)inText
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateLogViewNotification
+                                                        object:nil
+                                                      userInfo:@{kUpdateLogViewNotification_text: inText}];
+}
+
 - (void)webView:(WebView *)sender willPerformDragDestinationAction:(WebDragDestinationAction)action forDraggingInfo:(id < NSDraggingInfo >)draggingInfo
 {
     NSArray *files = nil;
-    NSString *targetImageElementSrc = [self targetElementSrcInWebView:sender forDragginInfo:draggingInfo];
     
     NSArray			*draggedURLStrings = nil;
     
@@ -75,10 +100,10 @@
         __typeof__(self) __weak weakSelf = self;
         // we only want to show the error once!
         
-        self.webviewFileDragEvents = [self existingPathsOfPromisedFilesForDraggingInfo:draggingInfo
+        self.webviewFileDragEvents = [Utilities existingPathsOfPromisedFilesForDraggingInfo:draggingInfo
                                                                       importImageBlock:^(NSString *inFilePathURL, BOOL inFinished) {
                                                                           
-                                                                          NSLog(@"########### --> Imported file %@", inFilePathURL);
+                                                                          [[self class] postUpdateLogViewNotificationWithText:[NSString stringWithFormat:@"########### --> Imported file %@", inFilePathURL]];
 
                                                                           if (inFinished)
                                                                           {
@@ -104,7 +129,7 @@
                 
                 if (![url isFileURL])
                 {
-                    NSString *urlString = [self pathURLStringToDraggedPasteboardImage];
+                    NSString *urlString = [Utilities pathURLStringToDraggedPasteboardImage];
                     if (urlString)
                     {
                         [fileURLs addObject:urlString];
@@ -122,7 +147,7 @@
     {
         if (nil != [[draggingInfo draggingPasteboard] dataForType:NSTIFFPboardType])
         {
-            NSString *urlString = [self pathURLStringToDraggedPasteboardImage];
+            NSString *urlString = [Utilities pathURLStringToDraggedPasteboardImage];
             if (urlString)
             {
                 files = @[urlString];
@@ -133,86 +158,23 @@
     if ([files count])
     {
         // we only want to show the error once!
-        NSLog(@"########### --> Imported files %@", files);
+        [[self class] postUpdateLogViewNotificationWithText:[NSString stringWithFormat:@"########### --> Imported files %@", files]];
     }
 }
 
-- (CDEvents*) existingPathsOfPromisedFilesForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
-                                         importImageBlock:(void (^)(NSString *inFilePathURL, BOOL inFinished))block
+- (void) updateLogViewNotification:(NSNotification*)inNoti
 {
-    NSString        *path = [NSTemporaryDirectory() stringByAppendingString:@"GSDraggingUtilsPromisedFiles"];
-    
-    [[NSFileManager defaultManager] createDirectoryAtPath:path
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:NULL];
-    
-    NSArray         *draggedFileNames = [draggingInfo namesOfPromisedFilesDroppedAtDestination:[NSURL fileURLWithPath:path]];
-    NSMutableArray  *draggedFileURLs = [[NSMutableArray alloc] init];
-    
-    for (NSString *name in draggedFileNames)
-    {
-        if (0 < [name length])
-        {
-            NSString    *filePath = [path stringByAppendingPathComponent:name];
-            NSURL       *fileURL = [NSURL fileURLWithPath:filePath];
-            
-            if (nil != fileURL)
-            {
-                [draggedFileURLs addObject:fileURL];
-            }
-        }
-    }
-    
-    if (0 < [draggedFileURLs count])
-    {
-        NSUInteger countOfURLs = [draggedFileURLs count];
-        
-        return [[CDEvents alloc] initWithURLs:@[[NSURL fileURLWithPath:path]]
-                                        block:^(CDEvents *watcher, CDEvent *event) {
-                                            if ([draggedFileURLs containsObject:event.URL])
-                                            {
-                                                NSMutableArray *excluded = [[NSMutableArray alloc] initWithObjects:event.URL, nil];
-                                                if (0 < [watcher.excludedURLs count])
-                                                {
-                                                    [excluded addObjectsFromArray:watcher.excludedURLs];
-                                                }
-                                                watcher.excludedURLs = [excluded copy];
-                                                
-                                                block([event.URL absoluteString], ([watcher.excludedURLs count] == countOfURLs));
-                                            }
-                                        }
-                                    onRunLoop:[NSRunLoop currentRunLoop]
-                         sinceEventIdentifier:kCDEventsSinceEventNow
-                         notificationLantency:CD_EVENTS_DEFAULT_NOTIFICATION_LATENCY
-                      ignoreEventsFromSubDirs:CD_EVENTS_DEFAULT_IGNORE_EVENT_FROM_SUB_DIRS
-                                  excludeURLs:nil
-                          streamCreationFlags:(kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagFileEvents)];
-    }
-    
-    return nil;
+    [self appendToMyTextView:[inNoti.userInfo[kUpdateLogViewNotification_text] stringByAppendingString:@"\n"]];
 }
 
-- (NSString *) pathURLStringToDraggedPasteboardImage
+- (void)appendToMyTextView:(NSString*)text
 {
-    (void)[[NSPasteboard generalPasteboard] types];
-    NSData *data = [[NSPasteboard pasteboardWithName:NSDragPboard] dataForType:@"public.tiff"];
+    NSAssert([NSThread isMainThread], @"Not on main thread");
     
-    if ( [data length] == 0 )
-        return nil;
+    NSAttributedString* attr = [[NSAttributedString alloc] initWithString:text];
     
-    NSString *filename = [[[NSUUID UUID] UUIDString] stringByAppendingPathExtension:@"tiff"];
-    NSString     *path = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
-    
-    BOOL success = [data writeToFile:path atomically:YES];
-    
-    if (success)
-    {
-        NSURL *url = [NSURL fileURLWithPath:path];
-        return [url absoluteString];
-    }
-    
-    return nil;
+    [[self.textView textStorage] appendAttributedString:attr];
+    [self.textView scrollRangeToVisible:NSMakeRange([[self.textView string] length], 0)];
 }
 
 @end
