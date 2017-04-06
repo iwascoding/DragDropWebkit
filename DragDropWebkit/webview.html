@@ -2,8 +2,120 @@
 <html id="gsp-html">
 	<head>
 		<title>Test</title>
+        
+        <script language="javascript" type="text/javascript">
+            
+        function printDebug(message)
+        {
+            if (window.console)
+            {
+                window.console.log(message);
+            }
+            else
+            {
+                alert(message);
+            }
+        }
+        
+        function imagedragover (event)
+        {
+            event.preventDefault();
+        }
+        
+        function imagedrag (event)
+        {
+            var elem = event.srcElement;
+            var uri = null;
+            
+            try {
+                uri = event.dataTransfer.getData("text/uri-list");
+            }
+            catch (e) {
+                printDebug(e);
+                printDebug("error in JavaScript while dataTransfer.getData: " + e);
+            }
+            
+            var inventoryImageFound = false;
+            
+            if (uri)
+            {
+                var droppedURI = elem.attributes.getNamedItem("src").value;
+                if (-1 != droppedURI.indexOf('inventoryImage=YES'))
+                {
+                    inventoryImageFound = true;
+                }
+                
+                if (false == inventoryImageFound)
+                {
+                    var draggedURIs = uri.split("\n");
+                    for (var i in draggedURIs)
+                    {
+                        if (-1 != draggedURIs[i].indexOf('inventoryImage=YES'))
+                        {
+                            inventoryImageFound = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            if (false == inventoryImageFound)
+            {
+                if (-1 == droppedURI.indexOf('image_dropzone_marker'))
+                {
+                    // copy is the default
+                    event.dataTransfer.effectAllowed = "linkMove";
+                    event.dataTransfer.dropEffect = "move";
+                }
+                
+                // source and destination are no inventory products
+                elem.style.outline = "solid 2px #08f";
+                elem.style.outlineOffset = "-2px";
+                elem.style.zIndex = "10";
+            }
+            else
+            {
+                event.dataTransfer.effectAllowed = "none";
+                event.dataTransfer.dropEffect = "none";
+            }
+            
+            event.preventDefault()
+        }
+        
+        function imagedragleave(event)
+        {
+            var elem = event.srcElement
+            elem.style.outline = "none";
+        }
+
+        function imagedropped (event)
+        {
+            var elem = event.srcElement;
+            
+            elem.style.outline = "none";
+            
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        
+        function imagedragended (event)
+        {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        </script>
+
 	</head>
 	<body>
         Sieht man des?
+        
+        <div align="center">
+            <span class="imgUrlSpan" style="position: relative;" ondragenter="imagedrag(event)" ondragover="imagedragover(event)" ondragleave="imagedragleave(event)" ondrop="imagedropped(event)" ondragend="imagedragended(event)">
+            
+                <img src="image_dropzone_marker.png"/>
+                    
+            </span>
+        </div>
     </body>
 </html>
